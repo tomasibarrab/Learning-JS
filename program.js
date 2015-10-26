@@ -86,3 +86,27 @@ for (var i = 0; i < properties.length; i++) {
 	document.writeln(properties[i] + ':' + another_person[properties[i]]);
 }
 
+//GLOBAL ABATEMENT, BETTER NOT USE THEM
+
+/*var MyApp{};
+
+MyApp.properties = {
+	'Name' : 'Tomas',
+	'Last_name' : 'Ibarra'
+};
+
+MyApp.flight = { 
+
+		airlane:"JetLine",
+		number:"15",
+		departure: {
+			IATA:"OYE",
+			time:"20015-09-25 13:00",
+			city:"Hermosillo"
+		},
+		arrival: {
+			IATA:"ZHI",
+			time:"2015-09-26 15:00",
+			city:"Cumpas"
+		}
+};*/
