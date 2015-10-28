@@ -54,7 +54,7 @@ another_person.Nickname = "Pepe";
 person.Profession = 'System Engineer';  //another_person.profession will be System engineer
 
 
-console.log(another_person.Profession);
+another_person.Profession;  //System Engineer
 
 //Reflection
 typeof flight.number     //'number'
@@ -91,8 +91,8 @@ for (var i = 0; i < properties.length; i++) {
 /*var MyApp{};
 
 MyApp.properties = {
-	'Name' : 'Tomas',
-	'Last_name' : 'Ibarra'
+	'Name' : 'Tomas'
+,	'Last_name' : 'Ibarra'
 };
 
 MyApp.flight = { 
@@ -110,3 +110,68 @@ MyApp.flight = {
 			city:"Cumpas"
 		}
 };*/
+
+//FUNCTIONS
+
+var add = function (a,b){
+	return a + b;
+};
+
+//METHOD INVOCATION
+
+/*Create myObject. It has a value and an increment
+  method, the increment method takes an optional parameter.
+  If the argument is not a number, then 1 is used as the default.*/
+var myObject = {
+ 	value : 0,
+ 	increment : function (inc) {
+ 		this.value += typeof inc === 'number' ? inc : 1;
+ 	}
+ };
+
+ myObject.increment()
+ //console.log(myObject.value); //1
+
+ myObject.increment(2)
+ //console.log(myObject.value); //3
+
+
+//FUNCTION INVOCATION
+var sum = add(3,4);   //sum is 7
+
+//Argument myObject with a double method.
+myObject.double = function(){
+	var that = this; 
+
+	var helper = function(){
+		that.value = add(that.value, that.value);
+	};
+
+	helper();  		//Invoke helper as a function
+};
+
+myObject.double(); 	//Invoke double as a method
+//console.log(myObject.value);  //6
+
+//CONSTRUCTOR INVOCATION
+//Create a constructor function called Quo, it makes an object with a status property
+var Quo = function(string){
+	this.status = string;
+};
+
+Quo.prototype.get_status = function(){
+	return this.status;
+};
+
+var myQuo = new Quo('Confused');
+myQuo.get_status();  //Confused
+
+//APPLY INVOCATION
+var array = [3,4];
+var suma = add.apply(null,array); //sum is 7
+
+var statusObject = {
+	status:'A-OK'
+};
+
+var stat = Quo.prototype.get_status.apply(statusObject);   //'A-OK'
