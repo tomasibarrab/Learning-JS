@@ -67,10 +67,9 @@ flight.hasOwnProperty('constructor');   //false
 
 //Enumeration
 var first_name;
-document.writeln();
 for(first_name in another_person){
 	if(typeof another_person[first_name] !== 'function'){
-		document.writeln(first_name + ':' + another_person[first_name]);
+		first_name + ':' + another_person[first_name];
 	}	
 }
 
@@ -83,7 +82,7 @@ var properties = [
 	'Profession'
 ];
 for (var i = 0; i < properties.length; i++) {
-	document.writeln(properties[i] + ':' + another_person[properties[i]]);
+	properties[i] + ':' + another_person[properties[i]];
 }
 
 //GLOBAL ABATEMENT, BETTER NOT USE THEM
@@ -210,3 +209,31 @@ var try_it = function(){
 try_it();
 
 //AUGMENTING TYPES
+Function.prototype.method = function (name, func) {
+ 	this.prototype[name] = func;
+ 	return this;
+};
+
+Number.method('integer', function ( ) {
+	return Math[this < 0 ? 'ceiling' : 'floor'](this);
+});
+
+String.method('trim', function ( ) {
+	return this.replace(/^\s+|\s+$/g, '');
+});
+
+'"' + " neat ".trim( ) + '"' //Trims spaces prints "neat"
+
+//RECURSION
+var calls = 0;
+var hanoi = function (disc, src, aux, dst) {
+	if (disc > 0) {
+ 		hanoi(disc - 1, src, dst, aux);
+ 		calls++;
+		document.writeln('Step ' + calls + ': Move disc ' + disc + ' from ' + src + ' to ' + dst);
+		hanoi(disc - 1, aux, src, dst);
+		calls-1;
+	}
+};
+
+hanoi(3, 'Src', 'Aux', 'Dst');
