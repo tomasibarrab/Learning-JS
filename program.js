@@ -175,3 +175,38 @@ var statusObject = {
 };
 
 var stat = Quo.prototype.get_status.apply(statusObject);   //'A-OK'
+
+//ARGUMENTS
+//Making a function that adds a lot of stuffs.
+
+var x = function(){
+	var i, x = 0;
+	for (i = 0; i < arguments.length; i += 1){
+		x += arguments[i];
+	}
+	return x;
+};
+
+x(10, 20, 30, 40, 50);  //150
+
+var add = function(a, b){
+	if (typeof a !== 'number' || typeof b !== 'number') {
+		throw{
+			name : 'TypeError',
+			message : 'add needs numbers'
+		};
+	}
+	return a + b;
+}
+
+var try_it = function(){
+	try{
+		add('a',2)                   //Makes the sum if numbers.
+	}catch(e){
+		e.name + ': ' + e.message    //Throws the error message.
+	}
+}
+
+try_it();
+
+//AUGMENTING TYPES
