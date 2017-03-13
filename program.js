@@ -1,7 +1,7 @@
 document.writeln('Holis Molis, Andamos aprendiendo JS :D');
 
 //First steps
-'c'+'a'+'t';           //cat  
+'c'+'a'+'t';           //cat
 'cat'.toUpperCase();   //CAT
 
 ///////////////////////////OBJECTS/////////////////////////////
@@ -10,7 +10,7 @@ var person = {
 	Last_name:'Johnson'
 };
 
-var flight = { 
+var flight = {
 
 		airlane:"Volaris",
 		number:"08",
@@ -33,7 +33,7 @@ flight.equipment = {
 flight.status = 'overdue';
 
 flight.equipment  //Boeing 777
-flight.status	  //overdue	
+flight.status	  //overdue
 
 //Object prototype, creando un objeto a partir de otro.
 if(typeof Object.create !== 'function'){
@@ -70,7 +70,7 @@ var first_name;
 for(first_name in another_person){
 	if(typeof another_person[first_name] !== 'function'){
 		first_name + ':' + another_person[first_name];
-	}	
+	}
 }
 
 //Order enumeration
@@ -94,7 +94,7 @@ MyApp.properties = {
 ,	'Last_name' : 'Ibarra'
 };
 
-MyApp.flight = { 
+MyApp.flight = {
 
 		airlane:"JetLine",
 		number:"15",
@@ -140,7 +140,7 @@ var sum = add(3,4);   //sum is 7
 
 //Argument myObject with a double method.
 myObject.double = function(){
-	var that = this; 
+	var that = this;
 
 	var helper = function(){
 		that.value = add(that.value, that.value);
@@ -206,7 +206,7 @@ var try_it = function(){
 	}
 }
 
-try_it();
+// try_it();
 
 //AUGMENTING TYPES
 Function.prototype.method = function (name, func) {
@@ -230,7 +230,7 @@ var hanoi = function (disc, src, aux, dst) {
 	if (disc > 0) {
  		hanoi(disc - 1, src, dst, aux);
  		calls++;
-		document.writeln('Step ' + calls + ': Move disc ' + disc + ' from ' + src + ' to ' + dst);
+		// document.writeln('Step ' + calls + ': Move disc ' + disc + ' from ' + src + ' to ' + dst);
 		hanoi(disc - 1, aux, src, dst);
 		calls-1;
 	}
@@ -249,11 +249,173 @@ var walk_the_DOM = function walk(node, func) {
 
 var getElementsByAttribute = function (att, value) {
 	var results = [];
-	 walk_the_DOM(document.body, function (node) {
+	walk_the_DOM(document.body, function (node) {
 	 	var actual = node.nodeType === 1 && node.getAttribute(att);
+
 	 	if (typeof actual === 'string' && (actual === value || typeof value !== 'string')) {
 	 		results.push(node);
 	 	}
-	 });
-    return results;
+	});
+  return results;
 };
+
+
+// Scope
+var foo = function (  ) {
+  var a = 3, b = 5;
+
+  var bar = function (  ) {
+    var b = 7, c = 11;  	// At this point, a is 3, b is 7, and c is 11
+    a += b + c; 					// At this point, a is 21, b is 7, and c is 11
+  };											// At this point, a is 3, b is 5, and c is not defined
+  bar(  );									// At this point, a is 21, b is 5
+};
+
+// CLOSURE
+var myObject = (function () {
+  var value = 0;
+
+  return {
+    increment: function (inc) {
+      value += typeof inc === 'number' ? inc : 1;
+    },
+    getValue: function (  ) {
+      return value;
+    }
+  };
+}());
+
+// Create a maker function called quo. It makes an
+// object with a get_status method and a private
+// status property.
+var quo = function (status) {
+	return {
+  	get_status: function (  ) {
+    	return status;
+    }
+  };
+};
+
+// Make an instance of quo.
+var myQuo = quo('Amazed AF');
+myQuo.get_status(  ); // Amazed AF
+
+
+// Define a function that sets a DOM node's color
+// to yellow and then fades it to white.
+
+var fade = function (node) {
+	var level = 1;
+	var step = function (  ) {
+  	var hex = level.toString(16);
+  	node.style.backgroundColor = '#FFFF' + hex + hex;
+  	if (level < 15) {
+    	level += 1;
+    	setTimeout(step, 100);
+  	}
+	};
+  setTimeout(step, 100);
+};
+// fade(document.body);  // Makes a fade from yellow to white
+
+// MODULES
+String.method('deentityify', function (  ) {
+
+// The entity table. It maps entity names to
+// characters.
+
+	var entity = {
+    quot: '"',
+    lt:   '<',
+    gt:   '>'
+  };
+
+	// Return the deentityify method.
+
+	return function (  ) {
+
+	// This is the deentityify method. It calls the string
+	// replace method, looking for substrings that start
+	// with '&' and end with ';'. If the characters in
+	// between are in the entity table, then replace the
+	// entity with the character from the table. It uses
+	// a regular expression (Chapter 7).
+
+	return this.replace(/&([^&;]+);/g,
+    function (a, b) {
+      var r = entity[b];
+      return typeof r === 'string' ? r : a;
+    	}
+		);
+  };
+}(  ));
+
+'&lt;&quot;&gt;'.deentityify(  );  // <">
+
+var serial_maker = function (  ) {
+
+	// Produce an object that produces unique strings. A
+	// unique string is made up of two parts: a prefix
+	// and a sequence number. The object comes with
+	// methods for setting the prefix and sequence
+	// number, and a gensym method that produces unique
+	// strings.
+
+  var prefix = '';
+  var seq = 0;
+  return {
+  	set_prefix: function (p) {
+    	prefix = String(p);
+  	},
+  	set_seq: function (s) {
+    	seq = s;
+  	},
+  	gensym: function ( ) {
+    	var result = prefix + seq;
+    	seq += 1;
+    	return result;
+  	}
+  };
+};
+var seqer = serial_maker( );
+seqer.set_prefix('Q');
+seqer.set_seq(1000);
+var unique = seqer.gensym( ); // "Q1000"
+
+// CURRY
+Function.method('curry', function (  ) {
+  var slice = Array.prototype.slice,
+  args = slice.apply(arguments),
+  that = this;
+  return function (  ) {
+    return that.apply(null, args.concat(slice.apply(arguments)));
+  };
+});
+
+var add1 = add.curry(1);
+add1(6);  // 7
+
+
+// MEMOIZATION
+//General memoized function
+var memoizer = function (memo, formula) {
+  var recur = function (n) {
+    var result = memo[n];
+    if (typeof result !== 'number') {
+      result = formula(recur, n);
+      memo[n] = result;
+    }
+    return result;
+  };
+  return recur;
+};
+
+// Fibonacci implementation
+var fibonacci = memoizer([0, 1], function (recur, n) {
+  return recur(n-1) + recur(n-2);
+});
+
+// Factorial implementation
+var factorial = memoizer([1, 1], function (recur, n) {
+  return n * recur(n-1);
+});
