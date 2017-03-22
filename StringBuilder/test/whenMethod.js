@@ -26,11 +26,11 @@ describe('when Method', function(){
 
     it('should return the otherWiseArgs value if constraint is not staisfied', function() {
       array = sb.each(cats, function(cat){
-      	this.when(cat.work > 7, function(){
-      	  return cat.name + ' is an old cat';
-      	},
-      	  [cat.name, 'is a young cat']);
-      })
+        this.when(cat.work > 7, function(){
+          return cat.name + ' is an old cat';
+        },
+        [cat.name, 'is a young cat']);
+      });
       expect(sb.string()).toBe('Skip is a young cat Sparky is a young cat Mary is a young cat');
     });
   });
