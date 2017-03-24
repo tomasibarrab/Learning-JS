@@ -1,27 +1,23 @@
-describe('prefix Method', function(){
+describe('prefix Method', function() {
   var sb = new StringBuilder();
-  var array = [];
+  var string = '';
 
   beforeEach(function() {
     sb = new StringBuilder();
-    array = [];
+    string = '';
   });
 
   describe('called with empty parameter', function() {
     it('should be empty', function() {
-      array = sb.prefix();
-      expect(array.prefixBuffer.length).toBe(1);
+      string = sb.prefix().string();
+      expect(string).toEqual('');
     });
   });
 
   describe('called with params', function() {
     it('should push the params', function() {
-      array = sb.prefix('<p>');
-        expect(sb.prefixBuffer).toEqual(['<p>']);
-        expect(sb.prefixBuffer.length).toBe(1);
-        sb.prefix('<ul>');
-        expect(sb.prefixBuffer.length).toBe(2);
-        expect(sb.prefixBuffer[1]).toBe('<ul>');
+      string = sb.prefix('<p>').prefix('<ul>').prefix('<li>').cat('prefixed').string();
+      expect(string).toEqual('<p> <ul> <li> prefixed');
     });
   });
 });

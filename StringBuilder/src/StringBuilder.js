@@ -1,25 +1,24 @@
+var isNumber = function(arg) {
+  return typeof arg === 'number'
+}
+
+var isArray = function(arg) {
+  return typeof arg === 'object'
+}
+
+var isFunction = function(arg) {
+  return typeof arg === 'function'
+}
+
+var isUndefined = function(arg) {
+  return typeof arg === 'undefined'
+}
+
 var StringBuilder = function() {
 
   this.buffer = [];
   this.prefixBuffer = [];
   this.suffixBuffer = [];
-  this.firstSB = null;
-
-  this.isNumber = function(arg) {
-    return arg.constructor === Number;
-  }
-
-  this.isArray = function(arg) {
-    return arg.constructor === Array;
-  }
-
-  this.isFunction = function(arg) {
-    return arg.constructor === Function;
-  }
-
-  this.isUndefined = function(arg) {
-    return typeof arg === 'undefined'
-  }
 
   this.cat = function() {
     var wrapArgs = this.prefixBuffer.concat([].slice.call(arguments).concat(this.suffixBuffer));
@@ -29,11 +28,9 @@ var StringBuilder = function() {
 
   this.pushToBuffer = function(arg) {
     for (var i = 0; i < arg.length; i++) {
-      if (this.isArray(arg[i])) {
-        for (var j = 0; j < arg[i].length; j++) {
-          this.buffer.push(arg[i][j].toString());
-        }
-      } else if (this.isFunction(arg[i])) {
+      if (isArray(arg[i])) {
+        this.pushToBuffer(arg[i]);
+      } else if (isFunction(arg[i])) {
         this.buffer.push(arg[i](arguments).toString());
       } else {
         this.buffer.push(arg[i].toString());
@@ -50,9 +47,9 @@ var StringBuilder = function() {
   }
 
   this.catIf = function() {
-    constraint = arguments[arguments.length -1];
-    for (var i = 0; i < arguments.length-1; i++) {
-      if (constraint) {
+    constraint = arguments[arguments.length-1];
+    if(constraint) {
+      for (var i = 0; i < arguments.length-1; i++) {
         this.cat(arguments[i]);
       }
     }
@@ -60,7 +57,7 @@ var StringBuilder = function() {
   }
 
   this.each = function(args, callBack) {
-    if (this.isFunction(callBack)) {
+    if (isFunction(callBack)) {
       for(var i = 0; i < args.length; i++) {
         callBack.call(this, args[i], i, args);
       }
@@ -69,7 +66,7 @@ var StringBuilder = function() {
   }
 
   this.when = function(exp, thenArgs, otherWiseArgs) {
-    if (this.isFunction(exp)) {
+    if (isFunction(exp)) {
       var exp_result = exp.call(this);
     } else {
       var exp_result = exp;
@@ -99,14 +96,14 @@ var StringBuilder = function() {
   }
 
   this.end = function(deep) {
-    if (this.isUndefined(deep)) {
+    if (isUndefined(deep)) {
       this.prefixBuffer.pop();
       this.suffixBuffer.pop();
-    } else if (this.isNumber(deep)) {
-        for (var i = 0; i < deep; i++) {
-          this.prefixBuffer.pop();
-          this.suffixBuffer.pop();
-        }
+    } else if (isNumber(deep)) {
+      for (var i = 0; i < deep; i++) {
+        this.prefixBuffer.pop();
+        this.suffixBuffer.pop();
+      }
     }
     return this.firstSB || this;
   }

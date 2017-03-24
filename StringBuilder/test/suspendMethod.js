@@ -1,29 +1,29 @@
-describe('suspend Method', function(){
+describe('suspend Method', function() {
   var sb = new StringBuilder();
-  var array = [];
+  var string = '';
 
   beforeEach(function() {
     sb = new StringBuilder();
-    array = [];
+    string = '';
   });
 
   describe('called with empty parameter', function() {
     it('should suspend the string then use end', function () {
-        array = sb
-          .wrap('<b>', '</b>')
-          .suspend()
-          .cat('cat')
-          .cat('kitten')
-          .end()
-          .rep('wrap', 2)
-          .string();
-      expect(sb.string()).toBe('cat kitten <b> wrap </b> <b> wrap </b>');
+      string = sb
+        .wrap('<b>', '</b>')
+        .suspend()
+        .cat('cat')
+        .cat('kitten')
+        .end()
+        .rep('wrap', 2)
+        .string();
+      expect(string).toEqual('cat kitten <b> wrap </b> <b> wrap </b>');
     });
   });
 
-  describe('called with arrays', function(){
-    it('should wrap with given array parameters', function () {
-      array = sb
+  describe('called with strings', function() {
+    it('should wrap with given string parameters', function () {
+      string = sb
         .wrap(['<p>', '<b>'],['</b>', '</p>'] )
         .suspend()
         .cat('plain text,')
@@ -31,7 +31,8 @@ describe('suspend Method', function(){
         .suspend()
         .end()
         .cat('bold text')
-      expect(sb.string()).toBe('plain text, <p> <b> bold text </b> </p>');
+        .string();
+      expect(string).toEqual('plain text, <p> <b> bold text </b> </p>');
     });
   });
 });

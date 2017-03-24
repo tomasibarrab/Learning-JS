@@ -1,22 +1,22 @@
-describe('catIf Method', function(){
+describe('catIf Method', function() {
   var sb = new StringBuilder();
-  var array = [];
+  var string = '';
 
   beforeEach(function() {
     sb = new StringBuilder();
-    array = [];
+    string = '';
   });
 
   describe('constraints', function() {
     var male = 'm', female = 'f';
     it('should not push values if constraint is not satified', function() {
-      array = sb.catIf('Tomas is an alpha male', male === 'f');
-      expect(array.buffer.length).toBe(0);
+      string = sb.catIf('Tomas is an alpha male', male === 'f').string();
+      expect(string).toEqual('');
     });
 
     it('should read constraints', function() {
-      array = sb.cat('Tomas is').catIf('male', male === 'm').cat(', and Isabel is').catIf('female', female ==='f');
-      expect(array.buffer).toEqual(['Tomas is', 'male', ', and Isabel is', 'female']);
+      string = sb.cat('Tomas is').catIf('male', male === 'm').cat('and Isabel is').catIf('female', female ==='f').string();
+      expect(string).toEqual('Tomas is male and Isabel is female');
     });
   });
 });

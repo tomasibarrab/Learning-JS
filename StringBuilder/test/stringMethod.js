@@ -1,4 +1,4 @@
-describe('string Method', function(){
+describe('string Method', function() {
   var sb = new StringBuilder();
   var string = '';
 
@@ -10,20 +10,18 @@ describe('string Method', function(){
   describe('called with strings', function() {
     it('should return an empty string if 0 arguments are given', function() {
       string = sb.string();
-      expect(string).toBe('');
+      expect(string).toEqual('');
     });
 
     it('should join the strings', function() {
-      sb.cat('Cats', 'are', 'awesome!');
-      string = sb.string();
-      expect(string).toBe('Cats are awesome!');
+      string = sb.cat('Cats', 'are', 'awesome!').string();
+      expect(string).toEqual('Cats are awesome!');
     });
   });
 
   describe('called with tag elements', function() {
     it('should join the string and tags', function() {
-      sb
-        .wrap('<h2>','</h2>')
+      string = sb.wrap('<h2>','</h2>')
         .cat('Todo list:')
         .end()
         .cat('<ul>')
@@ -32,8 +30,8 @@ describe('string Method', function(){
         .cat('second thing to do')
         .cat('third thing to do')
         .end()
-        .cat('</ul>');
-      string = sb.string();
+        .cat('</ul>')
+        .string();
       expect(string).toEqual('<h2> Todo list: </h2> <ul> <li> first thing to do </li> <li>'+
         ' second thing to do </li> <li> third thing to do </li> </ul>');
     });

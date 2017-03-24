@@ -1,26 +1,24 @@
-describe('end Method', function(){
+describe('end Method', function() {
   var sb = new StringBuilder();
-  var array = [];
+  var string = '';
 
   beforeEach(function() {
     sb = new StringBuilder();
-    array = [];
+    string = '';
   });
 
   describe('called to an empty buffer', function() {
     it('should be empty', function() {
-      array = sb.end();
-      expect(array.prefixBuffer.length).toEqual(0);
-      expect(array.suffixBuffer.length).toEqual(0);
-      array = sb.end(3);
-      expect(array.prefixBuffer.length).toEqual(0);
-      expect(array.suffixBuffer.length).toEqual(0);
+      string = sb.end().string();
+      expect(string).toEqual('');
+      string = sb.end(3).string();
+      expect(string).toEqual('');
     });
   });
 
   describe('end with params', function() {
     it('should end correctly', function() {
-      array = sb
+      string = sb
         .suffix('this')
         .suffix('is')
         .suffix('gone')
@@ -28,24 +26,22 @@ describe('end Method', function(){
         .suffix('this')
         .suffix('too')
         .end(2)
-      expect(array.prefixBuffer.length).toEqual(0);
-      expect(array.suffixBuffer.length).toBe(0);
+        .string();
+      expect(string).toEqual('');
     });
   });
 
   describe('end prefix with values', function() {
     it('should show the correct prefix', function() {
-      array = sb.prefix('deleted').end().prefix('pushed');
-      expect(array.prefixBuffer).toEqual(['pushed']);
-      expect(array.suffixBuffer.length).toEqual(1);
+      string = sb.prefix('deleted').end().prefix('pushed').cat('this').string();
+      expect(string).toEqual('pushed this');
     });
   });
 
   describe('end suffix with values', function() {
     it('should show the correct suffix', function() {
-      array = sb.suffix('deleted').end().suffix('pushed');
-      expect(array.prefixBuffer.length).toEqual(1);
-      expect(array.suffixBuffer).toEqual(['pushed']);
+      string = sb.suffix('deleted').end().suffix('pushed').cat('this').string();
+      expect(string).toEqual('this pushed');
     });
   });
 });

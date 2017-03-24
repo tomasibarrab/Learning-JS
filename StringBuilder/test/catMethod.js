@@ -1,38 +1,35 @@
-describe('cat Method', function(){
+describe('cat Method', function() {
   var sb = new StringBuilder();
-  var array = [];
+  var string = '';
 
   beforeEach(function() {
     sb = new StringBuilder();
-    array = [];
+    string = '';
   });
 
   describe('string as a parameter', function() {
     it('should be empty at first', function() {
-      var array = sb.cat();
-      expect(array.buffer.length).toBe(0);
+      var string = sb.cat().string();
+      expect(string).toEqual('');
     });
 
-    it('should push string values to buffer', function(){
-      array = sb.cat('this').cat('is').cat('cat');
-      expect(array.buffer).toEqual(['this', 'is', 'cat']);
-      expect(array.buffer.length).toBe(3);
+    it('should push string values to buffer', function() {
+      string = sb.cat('this').cat('is').cat('cat').string();
+      expect(string).toEqual('this is cat');
     });
   });
 
-  describe('array as parameter', function() {
-    it('should store one or more arrays', function(){
-      array = sb.cat(['Son', 'goku', 'is', 'powerful']).cat(['!']);
-      expect(array.buffer).toEqual(['Son', 'goku', 'is', 'powerful','!']);
-      expect(array.buffer.length).toBe(5);
+  describe('string as parameter', function() {
+    it('should store one or more strings', function() {
+      string = sb.cat(['Son', 'goku', 'is', 'powerful']).cat(['!!!']).string();
+      expect(string).toEqual('Son goku is powerful !!!');
     });
   });
 
   describe('function as a parameter', function() {
-    it('should store one or more functions', function(){
-      array = sb.cat('Son', function(){ return 'goku';}, 'is').cat(function(){return 'powerful!';});
-      expect(array.buffer).toEqual(['Son', 'goku', 'is', 'powerful!']);
-      expect(array.buffer.length).toBe(4);
+    it('should store one or more functions', function() {
+      string = sb.cat('Son', function(){ return 'goku';}, 'is').cat(function() { return 'powerful !!!'; }).string();
+      expect(string).toEqual('Son goku is powerful !!!');
     });
   });
 });
