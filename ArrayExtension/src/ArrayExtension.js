@@ -178,7 +178,7 @@
     if (!this.length) {
       return null;
     }
-    exp = (isFunction(spec)) ? spec : function(a, b) {return (a - b)};
+    var exp = (isFunction(spec)) ? spec : function(a, b) {return (a - b)};
     var min = this.reduce(
       function (a, b) {
         var res = exp.call(this, a, b);
