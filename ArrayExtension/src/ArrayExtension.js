@@ -186,7 +186,6 @@
         return tmpMin;
       });
     return min;
-
   }
 
   ArrayExtension.flatten = function() {
@@ -195,6 +194,6 @@
       return a.concat(isArray(b) ? b.reduce(flattener, []) : [b]);
     }, []);
     return buffer;
-	}
+  }
 
 }(Array.prototype));
