@@ -1,0 +1,40 @@
+describe('where Method', function() {
+  var bufferTest = [];
+
+  var people = [
+    {name: 'Marcos', age: 19, skills: ['C#', 'Asp.Net', 'OOP'] },
+    {name: 'Tomas', age: 15, skills: ['Ruby', 'JS', 'OOP'] },
+    {name: 'Timoteo', age: 16, skills: ['C#', 'Asp.Net', 'OOP']}
+  ];
+
+  beforeEach(function() {
+    bufferTest = [];
+  });
+
+  describe('when given an empty array', function() {
+    it('should return an empty array', function() {
+      bufferTest.where(function(dev){
+        var skills = dev.skills.where(function(skill) { return skill === 'OOP'; });
+        return skills.length == 0;}).each(function(x){ bufferTest.push(x.name)});
+      expect(bufferTest).toEqual([]);
+    });
+  });
+
+  describe('when is called', function() {
+    it('should return the correct object', function() {
+      people.where(function(dev){
+        var skills = dev.skills.where(function(skill) { return skill === 'C#'; });
+        return skills.length == 0;}).each(function(x){ bufferTest.push(x.name)});
+      expect(bufferTest).toEqual(['Tomas']);
+    });
+  });
+
+  describe('when is called', function() {
+    it('should return an empty array if all objects satisfy the constraint', function() {
+      people.where(function(dev){
+        var skills = dev.skills.where(function(skill) { return skill === 'OOP'; });
+        return skills.length == 0;}).each(function(x){ bufferTest.push(x.name)});
+      expect(bufferTest).toEqual([]);
+    });
+  });
+});
