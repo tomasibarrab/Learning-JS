@@ -1,0 +1,15 @@
+h1 {
+  color: #000000;
+  text-align: center;
+  margin: auto;
+  padding: 10px;
+  font: Georgia;
+  font-size: 30px;
+}
+
+canvas {
+  margin: 0 auto;
+  border: 1px solid #ccc;
+  width: 450px;
+  display: block;
+}
