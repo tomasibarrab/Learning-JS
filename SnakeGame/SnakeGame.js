@@ -9,51 +9,51 @@ $(document).ready(function() {
 	var d;
 	var food;
 	var score;
-  var playing = true;
+	var playing = true;
 	var snake_array;
 
 	function init() {
-	   d = "down"; // Default direction
-     create_snake();
-     create_food();
-     score = 0;
+   	d = "down"; // Default direction
+   	create_snake();
+   	create_food();
+   	score = 0;
 
-     // The snake movement uses a timer that trigger the paint function every 50ms
-     if (typeof game_loop != "undefined") {
-       clearInterval(game_loop);
-     }
-     game_loop = setInterval(paint, 50);
+   	// The snake movement uses a timer that trigger the paint function every 50ms
+   	if (typeof game_loop != "undefined") {
+     	clearInterval(game_loop);
+   	}
+   	game_loop = setInterval(paint, 50);
 	}
 
 	init(); // Initializes the game
 
 	function create_snake() {
-	  var length = 5;
-    snake_array = [];
-    for (var i = length-1; i>=0; i--) {
-	    // This will create a horizontal snake starting from the top left
-	    snake_array.push({x: i, y:0});
-    }
+  	var length = 5;
+  	snake_array = [];
+  	for (var i = length-1; i>=0; i--) {
+    	// This will create a horizontal snake starting from the top left
+    	snake_array.push({x: i, y:0});
+  	}
 	}
 
 
 	function create_food() {
-    // This will create a cell with x/y between 0-44
-    // Because there are 45(450/10) positions accross the rows and columns
-    food = {
+  	// This will create a cell with x/y between 0-44
+  	// Because there are 45(450/10) positions accross the rows and columns
+  	food = {
 			x: Math.round(Math.random()*(w-cw)/cw),
 			y: Math.round(Math.random()*(h-cw)/cw),
 		};
 	}
 
-  function gameOver() {
-    ctx.font = "30px Georgia";
-    ctx.fillStyle = "black"
-    ctx.textAlign="center";
-    ctx.fillText("Game Over", canvas.width/2, 200);
-    ctx.fillText('Press "Return" to Continue', canvas.width/2, 270);
-    playing = false;
-  }
+	function gameOver() {
+  	ctx.font = "30px Georgia";
+  	ctx.fillStyle = "black"
+  	ctx.textAlign="center";
+  	ctx.fillText("Game Over", canvas.width/2, 200);
+  	ctx.fillText('Press "Return" to Continue', canvas.width/2, 270);
+  	playing = false;
+	}
 
 	function paint() {
 		// To avoid the snake trail we need to paint the BG on every frame
@@ -66,23 +66,23 @@ $(document).ready(function() {
 		var nx = snake_array[0].x;
 		var ny = snake_array[0].y;
 
-    switch (d) {
-      case "right":
-        nx++;
-        break;
-      case "left":
-        nx--;
-        break;
-      case "up":
-        ny--;
-        break;
-      case "down":
-        ny++;
-    }
+  	switch (d) {
+    	case "right":
+      	nx++;
+      	break;
+    	case "left":
+      	nx--;
+      	break;
+    	case "up":
+      	ny--;
+      	break;
+    	case "down":
+      	ny++;
+  	}
 
 		// This will restart the game if the snake hits the wall or body collision
 		if (nx == -1 || nx == w/cw || ny == -1 || ny == h/cw || check_collision(nx, ny, snake_array)) {
-      gameOver();
+    	gameOver();
 			return;
 		}
 
@@ -107,8 +107,8 @@ $(document).ready(function() {
 		// Paints the food
 		paint_cell(food.x, food.y);
 		// Paints the score board
-    ctx.font = "12px sans-serif"
-    ctx.textAlign = "start"
+  	ctx.font = "12px sans-serif"
+  	ctx.textAlign = "start"
 		var score_text = "Score: " + score;
 		ctx.fillText(score_text, 5, h-5);
 	}
@@ -123,8 +123,8 @@ $(document).ready(function() {
 	function check_collision(x, y, array) {
 		for (var i = 0; i < array.length; i++) {
 			if (array[i].x == x && array[i].y == y) {
-        return true;
-      }
+      	return true;
+    	}
 		}
 		return false;
 	}
@@ -133,19 +133,19 @@ $(document).ready(function() {
 	$(document).keydown(function(e) {
 		var key = e.which;
 
-    if (playing) {
-      if (key == "37" && d != "right") {
-        d = "left";
-      } else if (key == "38" && d != "down") {
-         d = "up";
-      } else if (key == "39" && d != "left") {
-        d = "right";
-      } else if (key == "40" && d != "up") {
-        d = "down";
-      }
-    } else if (key == '13') {
-      playing = true;
-      init();
-    }
+  	if (playing) {
+    	if (key == "37" && d != "right") {
+      	d = "left";
+    	} else if (key == "38" && d != "down") {
+       	d = "up";
+    	} else if (key == "39" && d != "left") {
+      	d = "right";
+    	} else if (key == "40" && d != "up") {
+      	d = "down";
+    	}
+  	} else if (key == '13') {
+    	playing = true;
+    	init();
+  	}
 	})
 });
