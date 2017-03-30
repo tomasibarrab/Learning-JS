@@ -2,23 +2,17 @@
   "name": "arrayextension",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "grunt & mocha -R spec"
+    "test": "gulp test"
   },
   "author": "Tomas Ibarra",
   "license": "ISC",
   "devDependencies": {
-    "grunt": "^1.0.1",
-    "grunt-karma": "^2.0.0",
-    "jasmine-core": "^2.5.2",
-    "karma": "^1.5.0",
-    "karma-chrome-launcher": "^2.0.0",
-    "karma-firefox-launcher": "^1.0.1",
-    "karma-jasmine": "^1.1.0",
-    "mocha": "^2.4.5"
+    "chai": "^2.2.0",
+    "gulp": "^3.8.11",
+    "gulp-mocha": "^2.0.1"
   }
 }
